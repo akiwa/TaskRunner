@@ -1,2 +1,11 @@
+# Ignore IDE files
 .idea/
+.vscode/
+
+# Ignore Python generated files
 __pycache__/
+
+# Ignore setup files
+build/
+dist/
+*.egg-info/
