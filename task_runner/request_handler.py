@@ -1,5 +1,5 @@
 from task_runner.task_manager import TaskManager, Task
-from json import dumps
+from flask import jsonify
 
 
 class RequestHandler:
@@ -7,7 +7,9 @@ class RequestHandler:
         self._task_manager = task_manager
 
     def list_tasks(self) -> str:
-        return dumps([f"Task: {task.get_name()} - {'still running' if is_running else 'finished'}" for (task, is_running) in self._task_manager.list_tasks()])
+        tasks = [{"task_name": task.get_name(), "is_running": is_running}
+                 for (task, is_running) in self._task_manager.list_tasks()]
+        return jsonify(tasks)
 
     def start_task(self, name: str, command: str) -> str:
         self._task_manager.start_task(Task(name, command))
